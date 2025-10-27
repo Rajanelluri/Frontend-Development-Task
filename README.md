@@ -18,6 +18,138 @@ git clone https://github.com/Rajanelluri/Frontend-Development-Task
 cd https://github.com/Rajanelluri/Frontend-Development-Task
 
 
+Install
+
+npm install
+
+
+If Tailwind v4+ errors appear:
+
+npm install -D @tailwindcss/postcss autoprefixer postcss
+
+
+Run dev server
+
+npm run dev
+
+
+Open the Vite URL printed in terminal (usually http://localhost:5173
+).
+
+Build for production
+
+npm run build
+npm run preview
+
+Project structure (important files)
+src/
+  components/
+    ChartPanel.tsx
+    DataTable.tsx
+    Controls.tsx
+  context/
+    SelectionContext.tsx
+  hooks/
+    useEarthquakeData.ts
+  store/
+    useSelectionStore.ts
+  utils/
+    parseCsv.ts
+  types.d.ts
+  main.tsx
+  App.tsx
+styles/index.css
+tailwind.config.cjs
+postcss.config.cjs
+package.json
+README.md
+
+External dependencies & their purposes
+
+react, react-dom — UI rendering
+
+vite — dev server / bundler
+
+typescript — type safety
+
+tailwindcss — styling utilities
+
+@tailwindcss/postcss, postcss, autoprefixer — PostCSS pipeline for Tailwind
+
+axios — HTTP requests (fetch USGS CSV)
+
+papaparse — parse CSV to JSON
+
+recharts — charts (ScatterChart)
+
+zustand — lightweight global state store
+
+@tanstack/react-query — fetching/caching UI data
+
+react-icons — icons (optional)
+
+Additional features implemented & reasoning
+
+Two-way interaction — table ↔ chart highlight on hover/click.
+Reason: Makes data exploration easier and shows event-driven UI.
+
+Dynamic axis selection (dropdowns for X/Y): choose which numeric fields to plot.
+Reason: User-driven analysis; flexible visualizations for different analyses.
+
+Robust CSV parsing — numeric conversion and filtering invalid rows.
+Reason: Prevent runtime errors (e.g., toFixed on strings), ensure charts work.
+
+Responsive layout & dark theme — grid layout with min-w-0 and min-h-0 to fix Recharts sizing.
+Reason: Polished visuals and consistent display across viewports.
+
+Chart re-render strategy — using key={${xKey}-${yKey}} on the chart to force recalculation when axes change.
+Reason: Recharts can cache scales; remounting avoids stale axes.
+
+Helpful code comments (where to add)
+
+src/utils/parseCsv.ts — explain numeric conversion and filtering:
+
+// Convert CSV fields to numbers to avoid runtime errors with toFixed / chart scales
+latitude: Number(row.latitude) || 0
+
+
+src/hooks/useEarthquakeData.ts — describe Query client behavior:
+
+// useQuery v5 object signature: queryKey + queryFn, staleTime to cache for 5 minutes
+
+
+src/components/ChartPanel.tsx — explain remount trick:
+
+// Using key={`${xKey}-${yKey}`} forces a remount so Recharts recalculates scales.
+
+
+src/components/DataTable.tsx — explain scroll into view:
+
+// When selectedId changes, scroll the table row into view for better UX.
+
+How AI was used in development
+
+I used ChatGPT to:
+
+scaffold the project & generate boilerplate code (components, hooks).
+
+help troubleshoot environment issues (Tailwind/PostCSS, line endings, dependency errors).
+
+iterate chart visuals and interactivity (dynamic domains, color scale).
+
+draft this README and helpful commit messages.
+
+AI helped accelerate development; all final code was reviewed and tested locally.
+Branching:
+
+git checkout -b dev
+# work
+git commit -m "feat: ... "
+git push origin dev
+# when ready
+git checkout main
+git merge dev
+git push origin main
 
 
 
@@ -44,84 +176,4 @@ cd https://github.com/Rajanelluri/Frontend-Development-Task
 
 
 
-
-
-
-<<<<<<< HEAD
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-=======
-# Frontend-Development-Task
-Create a single-page web application that fetches geographic statistical data from a public source, presents it through both visual charts and data tables, and shows interconnected functionality between these components. While the company typically uses React, TypeScript, Zustand, TanStack Query, TanStack Router, and Tailwind CSS.
 
