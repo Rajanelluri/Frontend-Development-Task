@@ -152,8 +152,11 @@ git merge dev
 git push origin main
 
 
+output images:
 
+<img width="1920" height="1080" alt="Screenshot (145)" src="https://github.com/user-attachments/assets/580f591a-5cd3-4759-b71b-a106e9ff23ab" />
 
+<img width="1920" height="1080" alt="Screenshot (147)" src="https://github.com/user-attachments/assets/fe61bd09-b608-4c4a-a5d6-271d98aca90a" />
 
 
 
