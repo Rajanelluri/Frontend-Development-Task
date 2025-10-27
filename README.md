@@ -1,3 +1,52 @@
+# Earthquake Visualizer
+
+**Project:** Earthquake Visualizer — Vite + React + TypeScript  
+**Purpose:** Fetch USGS CSV (past 30 days) and visualize earthquakes as an interactive scatter chart + data table.
+
+---
+
+## Repository
+https://github.com/Rajanelluri/Frontend-Development-Task
+
+---
+
+## Quick start — install & run
+
+1. Clone
+```bash
+git clone https://github.com/Rajanelluri/Frontend-Development-Task
+cd https://github.com/Rajanelluri/Frontend-Development-Task
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <<<<<<< HEAD
 # React + TypeScript + Vite
 
@@ -75,4 +124,4 @@ export default defineConfig([
 =======
 # Frontend-Development-Task
 Create a single-page web application that fetches geographic statistical data from a public source, presents it through both visual charts and data tables, and shows interconnected functionality between these components. While the company typically uses React, TypeScript, Zustand, TanStack Query, TanStack Router, and Tailwind CSS.
->>>>>>> a3c609f558f5ce56a4bc5c91b0d080db51713d35
+
