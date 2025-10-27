@@ -47,10 +47,11 @@ export const DataTable: React.FC<{ data: EarthquakeRow[] }> = ({ data }) => {
                 <td className="p-2">{r.place}</td>
                 <td className="p-2">{r.mag}</td>
                 <td className="p-2">{r.depth}</td>
-                <td className="p-2">{r.latitude.toFixed(3)}</td>
-                <td className="p-2">{r.longitude.toFixed(3)}</td>
+                <td className="p-2">{Number(r.latitude).toFixed(3)}</td>
+                <td className="p-2">{Number(r.longitude).toFixed(3)}</td>
+
               </tr>
-            );
+            );s
           })}
         </tbody>
       </table>

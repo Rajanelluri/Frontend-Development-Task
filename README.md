@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -71,3 +72,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# Frontend-Development-Task
+Create a single-page web application that fetches geographic statistical data from a public source, presents it through both visual charts and data tables, and shows interconnected functionality between these components. While the company typically uses React, TypeScript, Zustand, TanStack Query, TanStack Router, and Tailwind CSS.
+>>>>>>> a3c609f558f5ce56a4bc5c91b0d080db51713d35
