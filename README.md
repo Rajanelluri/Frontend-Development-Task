@@ -144,3 +144,26 @@ Tailwind’s ResponsiveContainer simplifies making Recharts graphs fully respons
 
 
 
+Output:
+In the first output i used the poinsts which are unclear and i updated some changes to make it visible in barchart.
+
+<img width="1920" height="1080" alt="Screenshot (148)" src="https://github.com/user-attachments/assets/a7bf519e-cb53-4eb5-91c6-b6a036fa18fa" />
+
+After changes:
+
+<img width="1920" height="1080" alt="Screenshot (149)" src="https://github.com/user-attachments/assets/9cc70ae4-5940-427f-afb5-4b217e7fe4e7" />
+
+where by using the dropdown u can select the magnitude, latitude, longitude and depth.
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4b9c2dca-9170-4907-a939-b628ebfe4f10" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e8b2ecb1-f361-4611-aab9-86d01437f9a8" />
+
+u can filter based on the places here in the below i have chossen "paula" as the location:
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8f34b5f9-7dd0-485a-b4b1-df40e3afb249" />
+
+
+
+
+
+
