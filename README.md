@@ -1,182 +1,146 @@
-# Earthquake Visualizer
+# 🌍 Earthquake Visualization Dashboard
 
-**Project:** Earthquake Visualizer — Vite + React + TypeScript  
-**Purpose:** Fetch USGS CSV (past 30 days) and visualize earthquakes as an interactive scatter chart + data table.
-
----
-
-## Repository
-https://github.com/Rajanelluri/Frontend-Development-Task
+An interactive **React + Vite + TypeScript** web application that visualizes earthquake data from CSV files using beautiful bar charts, filters, and tables.  
+Built as part of the **Frontend Developer Assessment**, this project demonstrates real-world data visualization, state management, and UI responsiveness.
 
 ---
 
-## Quick start — install & run
+## 🚀 Project Overview
 
-1. Clone
+This application fetches and parses earthquake datasets (in CSV format) and visualizes them using **Recharts**.  
+It allows users to explore the relationship between earthquake **magnitude**, **depth**, and **location** through:
+
+- **Interactive bar charts**
+- **Dynamic filters for axes selection**
+- **Responsive tables for raw data**
+- **Selection highlighting** between chart and table
+
+The design emphasizes **clarity**, **performance**, and **responsiveness**, following best practices in modern React development.
+
+---
+
+##Key Features
+
+1. Fetches and parses CSV earthquake datasets  
+2. Interactive chart (BarChart using Recharts)  
+3. Real-time axis switching (e.g., Depth vs. Magnitude)  
+4. Click-to-select and highlight specific records  
+5. Clean UI built with TailwindCSS  
+6. State management with Zustand + Context  
+7. Error boundaries and loading states  
+8. Modular, reusable component architecture  
+
+---
+
+## Project File Structure
+earthquake-visual/
+├─ package.json
+├─ index.html
+├─ tailwind.config.cjs
+├─ postcss.config.cjs
+├─ README.md
+├─ src/
+│ ├─ main.tsx # Application entry point
+│ ├─ App.tsx # Root component integrating layout and logic
+│ ├─ styles/
+│ │ └─ index.css # Global styles (Tailwind setup)
+│ ├─ components/
+│ │ ├─ ChartPanel.tsx # Displays interactive BarChart visualization
+│ │ ├─ DataTable.tsx # Displays raw earthquake data with filtering
+│ │ └─ Controls.tsx # Dropdowns to switch chart axes (X/Y)
+│ ├─ context/
+│ │ └─ SelectionContext.tsx # Global selection context for interactivity
+│ ├─ store/
+│ │ └─ useSelectionStore.ts # Zustand store for shared state management
+│ ├─ hooks/
+│ │ └─ useEarthquakeData.ts # Custom React Query hook to fetch + cache data
+│ ├─ utils/
+│ │ └─ parseCsv.ts # Utility for CSV parsing and data transformation
+│ └─ types.d.ts # TypeScript interfaces for dataset typing
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/345a370f-e40e-48a5-bb38-a55c068b2342" />
+
+
+---
+
+##  Setup and Installation
+
+### 1️ Clone the Repository
 ```bash
-git clone https://github.com/Rajanelluri/Frontend-Development-Task
-cd https://github.com/Rajanelluri/Frontend-Development-Task
+git clone https://github.com/Rajanelluri/Frontend-Development-Task.git
+cd Frontend-Development-Task
 
-
-Install
-
+2  Install Dependencies
 npm install
-
-
-If Tailwind v4+ errors appear:
-
-npm install -D @tailwindcss/postcss autoprefixer postcss
-
-
-Run dev server
-
+Run the Development Server:
 npm run dev
+Visit the app at:
+👉 http://localhost:5174
 
+External Dependencies and Their Purpose:
+| Dependency                 | Purpose                                               |
+| -------------------------- | ----------------------------------------------------- |
+| **React**                  | Core UI library                                       |
+| **TypeScript**             | Adds strong typing to improve maintainability         |
+| **Vite**                   | Modern development server and build tool              |
+| **TailwindCSS**            | Utility-first CSS framework for styling               |
+| **Recharts**               | Data visualization (BarChart, Tooltip, Axes, Grid)    |
+| **Zustand**                | Lightweight global state management for selected rows |
+| **@tanstack/react-query**  | Data fetching and caching                             |
+| **PostCSS / Autoprefixer** | For TailwindCSS and cross-browser support             |
 
-Open the Vite URL printed in terminal (usually http://localhost:5173
-).
 
-Build for production
 
-npm run build
-npm run preview
+Visual Components:
 
-Project structure (important files)
-src/
-  components/
-    ChartPanel.tsx
-    DataTable.tsx
-    Controls.tsx
-  context/
-    SelectionContext.tsx
-  hooks/
-    useEarthquakeData.ts
-  store/
-    useSelectionStore.ts
-  utils/
-    parseCsv.ts
-  types.d.ts
-  main.tsx
-  App.tsx
-styles/index.css
-tailwind.config.cjs
-postcss.config.cjs
-package.json
-README.md
+BarChart Panel — Displays earthquake depth or magnitude comparison for top 20 entries.
 
-External dependencies & their purposes
+DataTable — Shows parsed data with sorting and selection sync.
 
-react, react-dom — UI rendering
+Controls — Dropdowns to dynamically switch X/Y axes (e.g., “Magnitude” vs “Depth”).
 
-vite — dev server / bundler
 
-typescript — type safety
+Known Issues & Fixes:
+| Issue                               | Root Cause                        | Fix Applied                                                       |
+| ----------------------------------- | --------------------------------- | ----------------------------------------------------------------- |
+| `row.mag.toFixed is not a function` | Some CSV values parsed as strings | Added type conversion with `Number()` and value checks            |
+| `useQuery bad argument type`        | TanStack Query v5 API changed     | Updated `useQuery` usage to object syntax                         |
+| Chart width/height warning          | Missing container dimensions      | Wrapped chart with `ResponsiveContainer` and added `aspect` ratio |
+| Hooks order warning                 | Conditional hooks execution       | Refactored to maintain consistent hook order                      |
+| CRLF vs LF warnings                 | Git line ending differences       | Added `.gitattributes` to normalize line endings                  |
 
-tailwindcss — styling utilities
 
-@tailwindcss/postcss, postcss, autoprefixer — PostCSS pipeline for Tailwind
 
-axios — HTTP requests (fetch USGS CSV)
 
-papaparse — parse CSV to JSON
 
-recharts — charts (ScatterChart)
+How AI Helped in Development:
 
-zustand — lightweight global state store
+AI tools (ChatGPT GPT-5) were used thoughtfully during development for:
 
-@tanstack/react-query — fetching/caching UI data
+Debugging complex React errors — such as hook order violations and useQuery migration to v5 syntax.
 
-react-icons — icons (optional)
+Optimizing chart interactivity — improved onClick handlers and highlighting behavior.
 
-Additional features implemented & reasoning
+Improving visual appeal — TailwindCSS adjustments and Recharts styling suggestions.
 
-Two-way interaction — table ↔ chart highlight on hover/click.
-Reason: Makes data exploration easier and shows event-driven UI.
+Error analysis and code refactoring — AI explanations for common console warnings.
 
-Dynamic axis selection (dropdowns for X/Y): choose which numeric fields to plot.
-Reason: User-driven analysis; flexible visualizations for different analyses.
+Documentation generation — this README was co-authored with ChatGPT for clarity and completeness.
 
-Robust CSV parsing — numeric conversion and filtering invalid rows.
-Reason: Prevent runtime errors (e.g., toFixed on strings), ensure charts work.
+All code was tested, reviewed, and manually verified before committing to ensure understanding and correctness.
 
-Responsive layout & dark theme — grid layout with min-w-0 and min-h-0 to fix Recharts sizing.
-Reason: Polished visuals and consistent display across viewports.
 
-Chart re-render strategy — using key={${xKey}-${yKey}} on the chart to force recalculation when axes change.
-Reason: Recharts can cache scales; remounting avoids stale axes.
 
-Helpful code comments (where to add)
+Lessons Learned:
 
-src/utils/parseCsv.ts — explain numeric conversion and filtering:
+Handling real-time CSV parsing and ensuring correct data types is critical.
 
-// Convert CSV fields to numbers to avoid runtime errors with toFixed / chart scales
-latitude: Number(row.latitude) || 0
+Maintaining consistent React hook order avoids render crashes.
 
+Zustand and React Query work elegantly together for state + data fetching.
 
-src/hooks/useEarthquakeData.ts — describe Query client behavior:
-
-// useQuery v5 object signature: queryKey + queryFn, staleTime to cache for 5 minutes
-
-
-src/components/ChartPanel.tsx — explain remount trick:
-
-// Using key={`${xKey}-${yKey}`} forces a remount so Recharts recalculates scales.
-
-
-src/components/DataTable.tsx — explain scroll into view:
-
-// When selectedId changes, scroll the table row into view for better UX.
-
-How AI was used in development
-
-I used ChatGPT to:
-
-scaffold the project & generate boilerplate code (components, hooks).
-
-help troubleshoot environment issues (Tailwind/PostCSS, line endings, dependency errors).
-
-iterate chart visuals and interactivity (dynamic domains, color scale).
-
-draft this README and helpful commit messages.
-
-AI helped accelerate development; all final code was reviewed and tested locally.
-Branching:
-
-git checkout -b dev
-# work
-git commit -m "feat: ... "
-git push origin dev
-# when ready
-git checkout main
-git merge dev
-git push origin main
-
-
-output images:
-
-<img width="1920" height="1080" alt="Screenshot (145)" src="https://github.com/user-attachments/assets/580f591a-5cd3-4759-b71b-a106e9ff23ab" />
-
-<img width="1920" height="1080" alt="Screenshot (147)" src="https://github.com/user-attachments/assets/fe61bd09-b608-4c4a-a5d6-271d98aca90a" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Tailwind’s ResponsiveContainer simplifies making Recharts graphs fully responsive.
 
 
 
