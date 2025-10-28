@@ -162,6 +162,10 @@ u can filter based on the places here in the below i have chossen "paula" as the
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8f34b5f9-7dd0-485a-b4b1-df40e3afb249" />
 
+one more update which i used the filter place for data table then it will automatically update the chart.
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d4157abc-21e3-411d-8ba8-3148807ebe36" />
+
+
 
 
 
