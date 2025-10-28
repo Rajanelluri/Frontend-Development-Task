@@ -1,57 +1,65 @@
-import React, { useRef, useEffect } from 'react';
-import type { EarthquakeRow } from '../types';
-import { useSelectionStore } from '../store/useSelectionStore';
-import { useSelection } from '../context/SelectionContext';
+import React, { useState, useMemo } from "react";
+import type { EarthquakeRow } from "../types";
+import { useSelectionStore } from "../store/useSelectionStore";
 
 export const DataTable: React.FC<{ data: EarthquakeRow[] }> = ({ data }) => {
-  const { selectedId, setSelectedId, filterText } = useSelectionStore();
-  const { selected, setSelected } = useSelection();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { selectedId, setSelectedId } = useSelectionStore();
+  const [filter, setFilter] = useState("");
 
-  const filtered = data.filter(d => (d.place || '').toLowerCase().includes((filterText || '').toLowerCase()));
-
-  useEffect(() => {
-    // Scroll selected into view
-    if (!selectedId) return;
-    const el = containerRef.current?.querySelector(`[data-id="${selectedId}"]`);
-    if (el && containerRef.current) {
-      (el as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [selectedId]);
+  // Filter logic (case-insensitive)
+  const filteredData = useMemo(() => {
+    const lower = filter.toLowerCase();
+    return data.filter((row) =>
+      row.place.toLowerCase().includes(lower)
+    );
+  }, [filter, data]);
 
   return (
-    <div className="h-full overflow-auto" ref={containerRef}>
-      <table className="min-w-full text-sm">
-        <thead className="sticky top-0 bg-white">
-          <tr>
-            <th className="p-2">Time</th>
-            <th className="p-2">Place</th>
-            <th className="p-2">Mag</th>
-            <th className="p-2">Depth</th>
-            <th className="p-2">Lat</th>
-            <th className="p-2">Lon</th>
+    <div className="h-full overflow-y-auto text-gray-100 bg-gray-900 p-3 rounded-lg shadow-inner">
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-lg font-semibold">Data Table</h2>
+        <input
+          type="text"
+          placeholder="filter place..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="p-2 text-sm bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring focus:ring-sky-500"
+        />
+      </div>
+
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="text-gray-400 border-b border-gray-700">
+            <th className="p-2 text-left">Time</th>
+            <th className="p-2 text-left">Place</th>
+            <th className="p-2 text-right">Mag</th>
+            <th className="p-2 text-right">Depth</th>
+            <th className="p-2 text-right">Lat</th>
+            <th className="p-2 text-right">Lon</th>
           </tr>
         </thead>
         <tbody>
-          {filtered.map((r) => {
-            const isSel = r.id === selectedId;
+          {filteredData.map((row) => {
+            const isSelected = row.id === selectedId;
             return (
               <tr
-                key={r.id}
-                data-id={r.id}
-                onMouseEnter={() => { setSelectedId(r.id); setSelected(r.id); }}
-                onClick={() => { setSelectedId(r.id); setSelected(r.id); }}
-                className={`cursor-pointer ${isSel ? 'bg-orange-100' : ''}`}
+                key={row.id}
+                onClick={() => setSelectedId(row.id)}
+                className={`cursor-pointer ${
+                  isSelected ? "bg-sky-700/40" : "hover:bg-sky-800/30"
+                }`}
               >
-                <td className="p-2">{r.time}</td>
-                <td className="p-2">{r.place}</td>
-                <td className="p-2">{r.mag}</td>
-                <td className="p-2">{r.depth}</td>
-                <td className="p-2">{Number(r.latitude).toFixed(3)}</td>
-                <td className="p-2">{Number(r.longitude).toFixed(3)}</td>
+                <td className="p-2">{row.time}</td>
+                <td className="p-2">{row.place}</td>
+                <td className="p-2 text-right">
+                   {Number(row.mag).toFixed(2)}
+                </td>
 
+                <td className="p-2 text-right">{row.depth}</td>
+                <td className="p-2 text-right">{row.latitude}</td>
+                <td className="p-2 text-right">{row.longitude}</td>
               </tr>
-            );s
+            );
           })}
         </tbody>
       </table>

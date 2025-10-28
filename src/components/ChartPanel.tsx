@@ -1,18 +1,24 @@
 import React, { useMemo } from "react";
 import {
-  ScatterChart,
-  Scatter,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   ResponsiveContainer,
-  ZAxis,
+  CartesianGrid,
+  Cell,
 } from "recharts";
 import type { EarthquakeRow } from "../types";
 import { useSelectionStore } from "../store/useSelectionStore";
 import { useSelection } from "../context/SelectionContext";
 
+/**
+ * ChartPanel Component
+ * --------------------
+ * Displays a responsive Bar Chart of earthquake data
+ * with dynamic coloring, hover tooltips, and selection highlighting.
+ */
 export const ChartPanel: React.FC<{
   data: EarthquakeRow[];
   xKey: string;
@@ -22,120 +28,94 @@ export const ChartPanel: React.FC<{
   const { selectedId, setSelectedId } = useSelectionStore();
   const { setSelected } = useSelection();
 
-  // Map chart data
-  const points = useMemo(
-    () =>
+  // Prepare and clean data for the chart
+  const chartData = useMemo(() => {
+    return (
       data
+        // ensure the selected Y field is numeric
+        .filter((d) => !isNaN(Number(d[yKey as keyof EarthquakeRow])))
+        // take top 20 records for readability
+        .slice(0, 20)
         .map((d) => ({
-          x: Number(d[xKey as keyof EarthquakeRow]),
-          y: Number(d[yKey as keyof EarthquakeRow]),
           id: d.id,
+          name: d.place?.length > 18 ? d.place.slice(0, 18) + "…" : d.place || "Unknown",
+          value: Number(d[yKey as keyof EarthquakeRow]) || 0,
           mag: Number(d.mag) || 0,
-          place: d.place,
         }))
-        .filter((d) => !isNaN(d.x) && !isNaN(d.y)),
-    [data, xKey, yKey]
-  );
-
-  // Compute dynamic domains for both axes
-  const xDomain = [
-    Math.min(...points.map((p) => p.x)),
-    Math.max(...points.map((p) => p.x)),
-  ];
-  const yDomain = [
-    Math.min(...points.map((p) => p.y)),
-    Math.max(...points.map((p) => p.y)),
-  ];
+    );
+  }, [data, yKey]);
 
   return (
-    <div className="h-full min-w-0 min-h-0 p-3 bg-gray-900 rounded-lg shadow-inner">
-      <ResponsiveContainer width="100%" height="100%">
-        {/* Key forces chart to re-render when X or Y variable changes */}
-        <ScatterChart
-          key={`${xKey}-${yKey}`}
-          margin={{ top: 20, right: 20, bottom: 40, left: 60 }}
+    <div className="flex-1 min-h-[350px] p-3 bg-gray-900 rounded-lg shadow-inner">
+      <ResponsiveContainer width="100%" aspect={2}>
+        <BarChart
+          data={chartData}
+          key={yKey}
+          margin={{ top: 20, right: 30, bottom: 60, left: 40 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
           <XAxis
-            type="number"
-            dataKey="x"
-            name={xKey}
-            domain={xDomain}
-            label={{
-              value: xKey.toUpperCase(),
-              position: "insideBottom",
-              offset: -10,
-              fill: "#e2e8f0",
-            }}
-            tick={{ fill: "#94a3b8" }}
+            dataKey="name"
+            angle={-45}
+            textAnchor="end"
+            interval={0}
+            height={70}
+            tick={{ fill: "#94a3b8", fontSize: 11 }}
           />
           <YAxis
-            type="number"
-            dataKey="y"
-            name={yKey}
-            domain={yDomain}
+            tick={{ fill: "#94a3b8", fontSize: 12 }}
             label={{
               value: yKey.toUpperCase(),
               angle: -90,
               position: "insideLeft",
-              fill: "#e2e8f0",
+              fill: "#cbd5e1",
             }}
-            tick={{ fill: "#94a3b8" }}
           />
-          <ZAxis type="number" dataKey="mag" range={[100, 800]} />
           <Tooltip
-            cursor={{ strokeDasharray: "3 3" }}
+            cursor={{ fill: "rgba(255,255,255,0.05)" }}
             contentStyle={{
               backgroundColor: "#1e293b",
               border: "1px solid #475569",
               color: "#f8fafc",
               borderRadius: "0.5rem",
             }}
-            formatter={(value: any, name: any, props: any) => [
-              value,
-              name === "x"
-                ? xKey
-                : name === "y"
-                ? yKey
-                : name === "mag"
-                ? "Magnitude"
-                : name,
+            formatter={(value, name) => [
+              Number(value).toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              }),
+              yKey,
             ]}
           />
-
-          {/* Data points */}
-          <Scatter
-            data={points}
-            onClick={(e) => {
-              const id = (e as any).id;
-              setSelectedId(id);
-              setSelected(id);
-              onPointClick?.(id);
+          <Bar
+            dataKey="value"
+            radius={[6, 6, 0, 0]}
+            onClick={(entry) => {
+              setSelectedId(entry.id);
+              setSelected(entry.id);
+              onPointClick?.(entry.id);
             }}
-            shape={(props: any) => {
-              const isSelected = props.payload.id === selectedId;
-              const magnitude = props.payload.mag || 1;
-              const radius = isSelected ? 10 : Math.max(4, magnitude * 2);
-              const color = isSelected
-                ? "#f97316" // orange
-                : magnitude >= 5
-                ? "#ef4444" // red for high magnitude
-                : magnitude >= 3
-                ? "#facc15" // yellow mid
-                : "#38bdf8"; // blue for low magnitude
+          >
+            {chartData.map((entry) => {
+              // Dynamic bar colors based on magnitude
+              const color =
+                entry.mag >= 5
+                  ? "#ef4444" // red for high magnitude
+                  : entry.mag >= 3
+                  ? "#facc15" // yellow for medium
+                  : "#38bdf8"; // blue for low
+              const isSelected = entry.id === selectedId;
+
               return (
-                <circle
-                  cx={props.cx}
-                  cy={props.cy}
-                  r={radius}
-                  fill={color}
-                  stroke="#0f172a"
-                  strokeWidth={1.5}
+                <Cell
+                  key={`cell-${entry.id}`}
+                  fill={isSelected ? "#f97316" : color}
+                  stroke={isSelected ? "#fbbf24" : "none"}
+                  strokeWidth={isSelected ? 2 : 0}
                 />
               );
-            }}
-          />
-        </ScatterChart>
+            })}
+          </Bar>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
