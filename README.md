@@ -166,8 +166,20 @@ one more update which i used the filter place for data table then it will automa
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d4157abc-21e3-411d-8ba8-3148807ebe36" />
 
 
+Sample Output:
+case 1: Fiilter place: paula
+x-axis: latitude
+y-axis: magnitude
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ef1de437-430e-4f95-ae07-7873bc194641" />
 
+case 2: place: paula
+x-axis: latitude
+y-axis: longitude
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/553575f3-7d81-4d8f-8963-23a9fb7a8296" />
 
-
+case 3:  place: paula
+ x-axis: depth
+y-axis: magnitude
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43f8b823-58fd-4195-8af6-a5f83c9297dc" />
 
 
