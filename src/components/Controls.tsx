@@ -1,29 +1,46 @@
-import React from 'react';
-import { useSelectionStore } from '../store/useSelectionStore';
+import React from "react";
 
-export const Controls: React.FC<{ xKey: string; yKey: string; setX: (k:string)=>void; setY:(k:string)=>void }> = ({ xKey, yKey, setX, setY }) => {
-  const { filterText, setFilterText } = useSelectionStore();
+interface ControlsProps {
+  xKey: string;
+  yKey: string;
+  setX: (key: string) => void;
+  setY: (key: string) => void;
+  filter: string;
+  setFilter: (value: string) => void;
+}
+
+export const Controls: React.FC<ControlsProps> = ({ xKey, yKey, setX, setY, filter, setFilter }) => {
+  const keys = ["mag", "depth", "lat", "lon"];
+
   return (
-    <div className="flex gap-4 items-center p-2">
-      <label> X:
-        <select value={xKey} onChange={e => setX(e.target.value)} className="ml-2 p-1 border rounded">
-          <option value="mag">Magnitude</option>
-          <option value="depth">Depth</option>
-          <option value="latitude">Latitude</option>
+    <div className="flex gap-2 p-2 bg-gray-800 border-b border-gray-700">
+      <label>
+        X:
+        <select value={xKey} onChange={(e) => setX(e.target.value)} className="ml-1 bg-gray-700 p-1 rounded">
+          {keys.map((k) => (
+            <option key={k} value={k}>
+              {k.charAt(0).toUpperCase() + k.slice(1)}
+            </option>
+          ))}
         </select>
       </label>
-      <label> Y:
-        <select value={yKey} onChange={e => setY(e.target.value)} className="ml-2 p-1 border rounded">
-          <option value="depth">Depth</option>
-          <option value="mag">Magnitude</option>
-          <option value="longitude">Longitude</option>
+      <label>
+        Y:
+        <select value={yKey} onChange={(e) => setY(e.target.value)} className="ml-1 bg-gray-700 p-1 rounded">
+          {keys.map((k) => (
+            <option key={k} value={k}>
+              {k.charAt(0).toUpperCase() + k.slice(1)}
+            </option>
+          ))}
         </select>
       </label>
+
       <input
-        className="ml-auto p-1 border rounded"
-        placeholder="filter place..."
-        value={filterText}
-        onChange={(e)=>setFilterText(e.target.value)}
+        type="text"
+        placeholder="Filter place..."
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="ml-auto bg-gray-700 text-gray-100 px-2 py-1 rounded"
       />
     </div>
   );
