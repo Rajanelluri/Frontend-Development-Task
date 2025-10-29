@@ -183,3 +183,15 @@ y-axis: magnitude
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/43f8b823-58fd-4195-8af6-a5f83c9297dc" />
 
 
+###New feature added to the project:
+CSV export button — lets users download the currently filtered earthquake data.
+
+Sticky table header — keeps column headers visible while scrolling.
+
+Better formatting for numbers and timestamps.
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e523f7ef-c2b5-4cd1-8039-d9c012e4a120" />
+
+after clicking the export button then it will export all the data that is filtered on place:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7fc23bda-7991-4384-a85a-237d7d8c8654" />
+
+
