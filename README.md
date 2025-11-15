@@ -21,7 +21,7 @@ The design emphasizes **clarity**, **performance**, and **responsiveness**, foll
 
 ##Key Features
 
-1. Fetches and parses CSV earthquake datasets  
+1. Fetches and parses CSV earthquake datasets 
 2. Interactive chart (BarChart using Recharts)  
 3. Real-time axis switching (e.g., Depth vs. Magnitude)  
 4. Click-to-select and highlight specific records  
